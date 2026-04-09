@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/search", searchRoute);
 app.use("/supplier", supplierRoute);
 app.use("/inventory", inventoryRoute);
-
-app.listen(5000, () => {
-  console.log("SERVER running on port 5000");
+const PORT =process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`SERVER running on port ${PORT}`);
 });

@@ -2,7 +2,7 @@ import express from "express";
 import supabase from "../db.js";
 
 const router = express.Router();
-const allowedCategories = ["grain", "electronics", "clothes"];
+const allowedCategories = ["grain", "electronics", "food"];
 // GET /search
 router.get("/", async (req, res) => {
   let { q, category, minPrice, maxPrice } = req.query;
