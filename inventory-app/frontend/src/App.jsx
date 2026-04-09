@@ -1,3 +1,4 @@
+import { log } from "node:console";
 import { useState } from "react";
 
 function App() {
@@ -37,7 +38,11 @@ function App() {
         `https://assignments-backend.onrender.com/search?${query}`
       );
       const data = await res.json();
+      console.log("API DATA:",data);
+      
+      if(Array.isArray(data)){
       setResults(data);
+    }else{setResults([])}
     } catch (err) {
       console.log(err);
       setResults([]);
@@ -89,14 +94,16 @@ function App() {
 
       {/* Results */}
       <div style={{ marginTop: "20px" }}>
-        {results.length === 0 ? (
+        {Array.isArray(results) &&(
+         results.length === 0 ? (
           <p>No results found</p>
         ) : (
           results.map((item, index) => (
             <div key={index}>
-              {item.name} - ₹{item.price}
+              {item.product_name} - ₹{item.price}
             </div>
           ))
+        )
         )}
       </div>
     </div>
