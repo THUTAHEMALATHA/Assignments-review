@@ -2,8 +2,9 @@ import express from "express";
 import supabase from "../db.js";
 
 const router = express.Router();
-const allowedCategories = ["grain", "electronics", "food"];
-// GET /search
+const allowedCategories = ["Grain", "Electronics", "Food"];
+// GET 
+
 router.get("/", async (req, res) => {
   let { q, category, minPrice, maxPrice } = req.query;
 
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
   let query = supabase.from("inventory").select("*");
 
   if (q) {
-    query = query.ilike("product_name", `%${q.trim()}%`);
+    query = query.ilike("product_name" , `%${q.trim()}%`);
   }
 
   if (category) {
