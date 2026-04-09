@@ -11,7 +11,7 @@ function App(){
   const[results , setResults] = useState([]);
   const search = async()=>{
     const query = new URLSearchParams(filters).toString();
-    const res = await fetch(`http://localhost:5000/search?{query}`);
+    const res = await fetch(`https://assignments-backend.onrender.com/search?${query}`);
     const data = await res.json();
     setResults(data);
  };
