@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   let query = supabase.from("inventory").select("*");
 
   if (q) {
-    query = query.ilike("product_name", `%${q}%`);
+    query = query.ilike("product_name", `%${q.trim()}%`);
   }
 
   if (category) {
