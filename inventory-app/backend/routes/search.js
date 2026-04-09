@@ -7,7 +7,7 @@ const allowedCategories = ["grain", "electronics", "clothes"];
 router.get("/", async (req, res) => {
   let { q, category, minPrice, maxPrice } = req.query;
 
-  //  validation
+  //  validation is 
   if (category && !allowedCategories.includes(category)) {
     return res.status(400).json({ error: "Invalid category" });
   }
@@ -36,5 +36,6 @@ router.get("/", async (req, res) => {
 
   res.json(data);
 });
+
 
 export default router;
