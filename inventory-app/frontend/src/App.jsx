@@ -9,53 +9,98 @@ function App() {
   });
 
   const [results, setResults] = useState([]);
-  const search = async () => {
-    const query = new URLSearchParams(filters).toString();
-    const res = await fetch(
-      `https://assignments-backend.onrender.com/search?${query}`,
-    );
-    const data = await res.json();
-    setResults(data);
+
+  // input change handler
+  const handleChange = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  // search function
+  const search = async () => {
+    if (
+      !filters.q &&
+      !filters.category &&
+      !filters.minPrice &&
+      !filters.maxPrice
+    ) {
+      setResults([]);
+      return;
+    }
+
+    const query = new URLSearchParams(filters).toString();
+
+    try {
+      const res = await fetch(
+        `https://assignments-backend.onrender.com/search?${query}`
+      );
+      const data = await res.json();
+      setResults(data);
+    } catch (err) {
+      console.log(err);
+      setResults([]);
+    }
+  };
+
   return (
-    <div>
+    <div style={{ textAlign: "center", marginTop: "40px" }}>
       <h1>Inventory Search</h1>
-      <input
-        placeholder="Search"
-        onChange={(e) => setFilters({ ...filters, q: e.target.value })}
-      />
-      <select
-        onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-      >
-        <option value="">All</option>
-        <option value="grain">Grain</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothes">Clothes</option>
-      </select>
 
-      <input
-        type="number"
-        placeholder="Min Price"
-        onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-      />
-      <input
-        type="number"
-        placeholder="Max Price"
-        onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-      />
+      {/* Filters */}
+      <div>
+        <input
+          name="q"
+          placeholder="Search"
+          value={filters.q}
+          onChange={handleChange}
+        />
 
-      <button onClick={search}>Search</button>
+        <select
+          name="category"
+          value={filters.category}
+          onChange={handleChange}
+        >
+          <option value="">All</option>
+          <option value="grain">Grain</option>
+          <option value="food">Food</option>
+          <option value="electronics">Electronics</option>
+        </select>
 
-      {results.length === 0 ? (
-        <p>No results found</p>
-      ) : (
-        results.map((item) => (
-          <div key={item.id}>
-            {item.product_name} - ₹{item.price}
-          </div>
-        ))
-      )}
+        <input
+          type="number"
+          name="minPrice"
+          placeholder="Min Price"
+          value={filters.minPrice}
+          onChange={handleChange}
+        />
+
+        <input
+          type="number"
+          name="maxPrice"
+          placeholder="Max Price"
+          value={filters.maxPrice}
+          onChange={handleChange}
+        />
+
+        <button onClick={search}>Search</button>
+      </div>
+
+      {/* Results */}
+      <div style={{ marginTop: "20px" }}>
+        {results.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          results.map((item, index) => (
+            <div key={index}>
+              {item.name} - ₹{item.price}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
+
 export default App;
