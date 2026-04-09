@@ -2,36 +2,32 @@ import express from "express";
 import supabase from "../db.js";
 
 const router = express.Router();
-
+const allowedCategories = ["grain", "electronics", "clothes"];
 // GET /search
 router.get("/", async (req, res) => {
   let { q, category, minPrice, maxPrice } = req.query;
 
-  // base query
+  //  validation
+  if (category && !allowedCategories.includes(category)) {
+    return res.status(400).json({ error: "Invalid category" });
+  }
+
   let query = supabase.from("inventory").select("*");
 
-  // product name (case-insensitive)
   if (q) {
     query = query.ilike("product_name", `%${q}%`);
   }
 
-  // category filter
   if (category) {
     query = query.eq("category", category);
   }
 
-  // price filters
   if (minPrice) {
     query = query.gte("price", minPrice);
   }
 
   if (maxPrice) {
     query = query.lte("price", maxPrice);
-  }
-
-  // invalid range
-  if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
-    return res.status(400).json({ message: "Invalid price range" });
   }
 
   const { data, error } = await query;
