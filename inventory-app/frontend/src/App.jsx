@@ -71,9 +71,9 @@ function App() {
           onChange={handleChange}
         >
           <option value="">All</option>
-          <option value="grain">Grain</option>
-          <option value="food">Food</option>
-          <option value="electronics">Electronics</option>
+          <option value="Grain">Grain</option>
+          <option value="Food">Food</option>
+          <option value="Electronics">Electronics</option>
         </select>
 
         <input
