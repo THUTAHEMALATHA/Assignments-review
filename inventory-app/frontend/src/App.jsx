@@ -31,7 +31,10 @@ function App() {
       return;
     }
 
-    const query = new URLSearchParams(filters).toString();
+    const query = new URLSearchParams({
+      ...filters,
+    q:filters.q.trim()
+  }).toString();
 
     try {
       const res = await fetch(
