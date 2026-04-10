@@ -1,4 +1,3 @@
-import { log } from "node:console";
 import { useState } from "react";
 
 function App() {
@@ -37,9 +36,7 @@ function App() {
   }).toString();
 
     try {
-      const res = await fetch(
-        `https://assignments-backend.onrender.com/search?${query}`
-      );
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/search?${query}`);
       const data = await res.json();
       console.log("API DATA:",data);
       
@@ -71,9 +68,9 @@ function App() {
           onChange={handleChange}
         >
           <option value="">All</option>
-          <option value="Grain">Grain</option>
-          <option value="Food">Food</option>
-          <option value="Electronics">Electronics</option>
+          <option value="grain">Grain</option>
+          <option value="food">Food</option>
+          <option value="electronics">Electronics</option>
         </select>
 
         <input
