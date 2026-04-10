@@ -1,0 +1,237 @@
+# 🧾 Inventory Search App
+
+A full-stack inventory search application built using **React (Frontend)** and **Node.js + Express + Supabase (Backend)**.
+Users can search products using filters like name, category, and price range.
+
+---
+
+## 🚀 Features
+
+* 🔍 Search products by name
+* 🗂️ Filter by category (grain, food, electronics)
+* 💰 Filter by min and max price
+* 📡 REST API integration
+* ⚡ Real-time search results
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* JavaScript (ES6+)
+* CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* Supabase (Database)
+
+---
+
+## 📁 Project Structure
+
+```
+inventory-app/
+│
+├── backend/
+│   ├── routes/
+│   │   ├── search.js
+│   │   ├── inventory.js
+│   │   └── supplier.js
+│   ├── db.js
+│   └── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   └── index.html
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone the repository
+
+```
+git clone https://github.com/your-username/your-repo-name.git
+cd inventory-app
+```
+
+---
+
+### 2️⃣ Backend Setup
+
+```
+cd backend
+npm install
+npm start
+```
+
+Server runs on:
+
+```
+http://localhost:5000
+```
+
+---
+
+### 3️⃣ Frontend Setup
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🔗 API Endpoint
+
+### Search API
+
+```
+GET /search
+```
+
+### Query Params
+
+| Param    | Type   | Example |
+| -------- | ------ | ------- |
+| q        | string | rice    |
+| category | string | grain   |
+| minPrice | number | 10      |
+| maxPrice | number | 100     |
+
+### Example:
+
+```
+/search?q=rice&category=grain&minPrice=10&maxPrice=100
+```
+
+---
+
+## ⚠️ Important Notes
+
+### ✅ Category values must match exactly:
+
+```
+grain
+food
+electronics
+```
+
+### ❌ Wrong:
+
+```
+Grain
+FOOD
+```
+
+---
+
+### ✅ Database Requirement
+
+Make sure `category` field is NOT NULL.
+
+Example:
+
+```
+{
+  "product_name": "Rice Bag",
+  "price": 50,
+  "category": "grain"
+}
+```
+
+---
+
+## 🐞 Common Errors & Fixes
+
+### 1. ❌ Invalid category
+
+**Reason:**
+
+* Category mismatch (case-sensitive)
+
+**Fix:**
+
+* Use lowercase values
+* Or convert in frontend:
+
+```
+filters.category.toLowerCase()
+```
+
+---
+
+### 2. ❌ No results found
+
+**Reason:**
+
+* Category is NULL in DB
+
+**Fix:**
+
+* Update DB category values
+
+---
+
+### 3. ❌ Failed to fetch / CORS
+
+**Reason:**
+
+* Backend not running or sleeping
+
+**Fix:**
+
+* Restart backend
+* Add CORS:
+
+```
+app.use(cors());
+```
+
+---
+
+## 📦 Deployment
+
+### Frontend:
+
+* Vercel
+
+### Backend:
+
+* Render
+
+---
+
+## 👩‍💻 Author
+
+**Hemalatha**
+
+---
+
+## ⭐ Acknowledgment
+
+This project was built as part of full-stack practice to understand:
+
+* API integration
+* Filtering logic
+* Backend validation
+* Real-world debugging
+
+---
