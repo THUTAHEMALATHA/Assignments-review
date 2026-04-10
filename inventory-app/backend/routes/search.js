@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   let { q, category, minPrice, maxPrice } = req.query;
 
   //  validation is 
-  if (category && !allowedCategories.includes(category)) {
+  if (category && !allowedCategories.includes(category.toLowerCase())) {
     return res.status(400).json({ error: "Invalid category" });
   }
 
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
   }
 
   if (category) {
-    query = query.eq("category", category);
+    query = query.eq("category", category.toLowerCase());
   }
 
   if (minPrice) {
