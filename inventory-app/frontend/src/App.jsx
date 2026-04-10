@@ -18,31 +18,40 @@ function App() {
     });
   };
 
-  // search function
+  // search function (FIXED)
   const search = async () => {
-    if (
-      !filters.q &&
-      !filters.category &&
-      !filters.minPrice &&
-      !filters.maxPrice
-    ) {
-      setResults([]);
-      return;
+    const params = new URLSearchParams();
+
+    if (filters.q) {
+      params.append("q", filters.q.trim());
     }
 
-    const query = new URLSearchParams({
-      ...filters,
-    q:filters.q.trim()
-  }).toString();
+    if (filters.category) {
+      params.append("category", filters.category.toLowerCase());
+    }
+
+    if (filters.minPrice) {
+      params.append("minPrice", filters.minPrice);
+    }
+
+    if (filters.maxPrice) {
+      params.append("maxPrice", filters.maxPrice);
+    }
+
+    const query = params.toString();
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/search?${query}`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/search?${query}`
+      );
       const data = await res.json();
-      console.log("API DATA:",data);
-      
-      if(Array.isArray(data)){
-      setResults(data);
-    }else{setResults([])}
+      console.log("API DATA:", data);
+
+      if (Array.isArray(data)) {
+        setResults(data);
+      } else {
+        setResults([]);
+      }
     } catch (err) {
       console.log(err);
       setResults([]);
@@ -94,17 +103,16 @@ function App() {
 
       {/* Results */}
       <div style={{ marginTop: "20px" }}>
-        {Array.isArray(results) &&(
-         results.length === 0 ? (
-          <p>No results found</p>
-        ) : (
-          results.map((item, index) => (
-            <div key={index}>
-              {item.product_name} - ₹{item.price}
-            </div>
-          ))
-        )
-        )}
+        {Array.isArray(results) &&
+          (results.length === 0 ? (
+            <p>No results found</p>
+          ) : (
+            results.map((item, index) => (
+              <div key={index}>
+                {item.product_name} - ₹{item.price}
+              </div>
+            ))
+          ))}
       </div>
     </div>
   );
