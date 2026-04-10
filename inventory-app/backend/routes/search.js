@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     query = query.ilike("product_name" , `%${q.trim()}%`);
   }
 
-  if (category) {
+  if (category && category !== "all") {
     query = query.eq("category", category.toLowerCase());
   }
 
