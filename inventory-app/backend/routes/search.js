@@ -2,7 +2,7 @@ import express from "express";
 import supabase from "../db.js";
 
 const router = express.Router();
-const allowedCategories = ["Grain", "Electronics", "Food"];
+const allowedCategories = ["grain", "electronics", "food"];
 // GET 
 
 router.get("/", async (req, res) => {
